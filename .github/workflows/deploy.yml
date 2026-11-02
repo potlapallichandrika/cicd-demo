@@ -1,0 +1,27 @@
+name: Deploy CI/CD Demo
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, linux, x64]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to GPU245
+        run: |
+          cp index.html /var/www/html/cicd-demo/index.html
+
+      - name: Verify deployment
+        run: |
+          echo "Deployment completed"
+          cat /var/www/html/cicd-demo/index.html
